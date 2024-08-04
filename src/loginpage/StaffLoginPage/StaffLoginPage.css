@@ -1,3 +1,8 @@
+.error-message {
+    color: red;
+    margin-top: 10px;
+  }
+
 .login-staf{
     border: none;
 }
@@ -16,4 +21,3 @@
     outline-color: rgb(198, 236, 198) ;
     border: none;
 }
-

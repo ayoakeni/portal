@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-// import './LoginPage.css';
-import "./StaffLoginPage.css";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../utils/Firebase';
+import './StaffLoginPage.css';
 
 const StaffLoginPage = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Placeholder for form submission logic
-    console.log('Username:', username);
-    console.log('Password:', password);
-    
-    // Assuming login is successful
-    navigate('/staff-request');
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      console.log('Login successful');
+      navigate('/staff-request');
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setError(error.message);
+    }
   };
 
   const containerVariants = {
@@ -42,21 +46,20 @@ const StaffLoginPage = () => {
       initial="hidden"
       animate="visible"
     >
-     
       <form onSubmit={handleSubmit}>
         <motion.input
-        className='in-staff'
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          className='in-staff'
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
           variants={inputVariants}
           initial="hidden"
           animate="visible"
         />
         <motion.input 
-        className='in-staff'
+          className='in-staff'
           type="password"
           placeholder="Password"
           value={password}
@@ -66,16 +69,16 @@ const StaffLoginPage = () => {
           initial="hidden"
           animate="visible"
         />
+        {error && <p className="error-message">{error}</p>}
         <motion.button 
-        className="input-login"
+          className="input-login"
           type="submit" 
           variants={buttonVariants} 
           initial="hidden" 
           animate="visible"
           whileHover="hover"
         >
-           Login
-           
+          Login
         </motion.button>
       </form>
     </motion.div>

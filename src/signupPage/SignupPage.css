@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
   max-width: 400px;
   margin: 0 auto;
   padding: 2rem;
@@ -7,24 +7,24 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.login-container h2 {
+.signup-container h2 {
   text-align: center;
   margin-bottom: 1rem;
 }
 
-.login-container form {
+.signup-container form {
   display: flex;
   flex-direction: column;
 }
 
-.login-container input {
+.signup-containerr input {
   margin-bottom: 1rem;
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
 
-.login-container button {
+.signup-container button {
   padding: 0.5rem;
   border: none;
   color: white;
@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 
-.login-container .staff-admin-con{
+.signup-container .staff-admin-con{
   width: 100%;
   display: flex;
   gap: 5px;
@@ -40,21 +40,21 @@
   
 }
 
-.login-container .staff-admin-con {
+.signup-container .staff-admin-con {
   width: 100%;
   display: flex;
   gap: 5px;
   margin-bottom: 10px;
 }
 
-.login-container .staff-admin-con button {
+.signup-container .staff-admin-con button {
   width: 25%;
   color: black;
   margin-left: 15%;
   transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 
-.login-container .active {
+.signup-container .active {
   background-color: green;
   color: white !important;
   transition: background-color 0.15s ease-in-out;

@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../utils/Firebase';
-import './AdminLoginPage.css'
+import "../Admin&StaffLoginPage.css"; 
 
 const AdminLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ const AdminLoginPage = () => {
       navigate('/admin-dashboard'); // Change the route as needed
     } catch (error) {
       console.error('Error logging in:', error);
+      setError(error.message);
     }
   };
 
@@ -39,34 +41,37 @@ const AdminLoginPage = () => {
 
   return (
     <motion.div
-      className="login-staf"
+      className="login-adminStaff"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
-      <form onSubmit={handleSubmit}>
+      <form className='loginForm' onSubmit={handleSubmit}>
         <motion.input
-          className='in-staff'
+          className='in-adminStaff'
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          autoComplete='email'
           variants={inputVariants}
           initial="hidden"
           animate="visible"
         />
         <motion.input 
-          className='in-staff'
+          className='in-adminStaff'
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          autoComplete='current'
           variants={inputVariants}
           initial="hidden"
           animate="visible"
         />
+        {error && <p className="error-message">{error}</p>}
         <motion.button 
           className="input-login"
           type="submit" 

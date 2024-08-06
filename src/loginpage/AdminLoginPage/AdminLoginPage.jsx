@@ -9,11 +9,13 @@ import "../Admin&StaffLoginPage.css";
 const AdminLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -37,6 +39,8 @@ const AdminLoginPage = () => {
     } catch (error) {
       console.error('Error logging in:', error);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,8 +100,9 @@ const AdminLoginPage = () => {
           initial="hidden" 
           animate="visible"
           whileHover="hover"
+          disabled={loading} // Disable the button while loading
         >
-          Login
+          {loading ? 'Connecting...' : 'Login'}
         </motion.button>
       </form>
     </motion.div>

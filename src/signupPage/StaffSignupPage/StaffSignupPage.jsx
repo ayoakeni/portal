@@ -9,11 +9,13 @@ import "../Admin&StaffSignupPage.css";
 const StaffSignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -24,6 +26,8 @@ const StaffSignUpPage = () => {
     } catch (error) {
       console.error('Error signing up:', error);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,8 +82,9 @@ const StaffSignUpPage = () => {
           initial="hidden" 
           animate="visible"
           whileHover="hover"
+          disabled={loading} // Disable the button while loading
         >
-          Sign Up
+          {loading ? 'Connecting...' : 'Sign Up'}
         </motion.button>
       </form>
     </motion.div>

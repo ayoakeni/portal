@@ -9,11 +9,13 @@ import "../Admin&StaffLoginPage.css";
 const StaffLoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -26,8 +28,7 @@ const StaffLoginPage = () => {
           console.log('Login successful');
           navigate('/staff-request');
         } else {
-          console.error('Error: Unauthorized role');
-          setError('Unauthorized access: Staffs only.');
+          setError('Unauthorized access: Staff only.');
           await signOut(auth);
         }
       } else {
@@ -38,6 +39,8 @@ const StaffLoginPage = () => {
     } catch (error) {
       console.error('Error logging in:', error);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -97,8 +100,9 @@ const StaffLoginPage = () => {
           initial="hidden" 
           animate="visible"
           whileHover="hover"
+          disabled={loading} // Disable the button while loading
         >
-          Login
+          {loading ? 'Connecting...' : 'Login'}
         </motion.button>
       </form>
     </motion.div>

@@ -16,7 +16,6 @@ const PrivateRoute = ({ children, allowedRoles }) => {
           const userDoc = await getDoc(doc(db, 'users', user.uid));
           if (userDoc.exists()) {
             const userData = userDoc.data();
-            console.log('User data:', userData);
             setRole(userData.role);
           } else {
             console.error('No such document!');
@@ -42,14 +41,10 @@ const PrivateRoute = ({ children, allowedRoles }) => {
     return <div>Error</div>;
   }
 
-  console.log('User:', user);
-  console.log('Role:', role);
-
   if (!user || !allowedRoles.includes(role)) {
     return <Navigate to="/" />;
   }
 
-  console.log('Rendering children');
   return children;
 };
 

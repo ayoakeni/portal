@@ -1,9 +1,10 @@
 import React from 'react'
+import Logout from '../../logout/Logout';
 
 const AdminDashboard = () => {
   return (
     <div>
-      hjnkl
+      <Logout/>
     </div>
   )
 }

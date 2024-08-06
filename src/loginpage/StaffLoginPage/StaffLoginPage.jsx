@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../utils/Firebase';
+import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from '../../utils/Firebase';
 import "../Admin&StaffLoginPage.css"; 
 
 const StaffLoginPage = () => {
@@ -14,9 +15,26 @@ const StaffLoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log('Login successful');
-      navigate('/staff-request');
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Fetch user role from Firestore
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (userDoc.exists()) {
+        const role = userDoc.data().role;
+        if (role === 'staff') {
+          console.log('Login successful');
+          navigate('/staff-request');
+        } else {
+          console.error('Error: Unauthorized role');
+          setError('Unauthorized access: Staffs only.');
+          await signOut(auth);
+        }
+      } else {
+        console.error('Error: No user data found');
+        setError('User data not found.');
+        await signOut(auth);
+      }
     } catch (error) {
       console.error('Error logging in:', error);
       setError(error.message);

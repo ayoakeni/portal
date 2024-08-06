@@ -1,0 +1,33 @@
+.box {
+  display: flex;
+  height: 100vh;
+}
+.loader {
+  width: 64px;
+  height: 64px;
+  position: relative;
+  border-radius: 50%;
+  box-shadow: -10px 8px 0 18px inset green;
+  margin: auto;
+  animation: rotate 2s ease-in infinite alternate;
+}
+.loader::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  bottom: 16px;
+  background: green;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  animation: scale 1s ease-in infinite alternate;
+}
+@keyframes rotate {
+  100% { transform: rotate(750deg)}
+}
+@keyframes scale {
+ 100% { transform: scale(0.5) translateY(5px)}
+}
+.box .error{
+  color: red;
+}

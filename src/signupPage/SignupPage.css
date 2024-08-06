@@ -1,6 +1,15 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.sign-con{
+  display: flex;
+  height: 100vh;
+}
 .signup-container {
   max-width: 400px;
-  margin: 0 auto;
+  margin: auto;
   padding: 2rem;
   border: 1px solid #ddd;
   border-radius: 5px;

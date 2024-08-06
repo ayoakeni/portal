@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../utils/Firebase';  
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../../utils/Firebase';
 import "../Admin&StaffSignupPage.css";
 
 const AdminSignUpPage = () => {
@@ -14,7 +15,10 @@ const AdminSignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await setDoc(doc(db, 'users', user.uid), { role: 'admin' });
+
       console.log('Sign up successful');
       navigate('/admin-dashboard');
     } catch (error) {
@@ -40,12 +44,7 @@ const AdminSignUpPage = () => {
   };
 
   return (
-    <motion.div
-      className="signup-admin-staff"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <motion.div className="signup-admin-staff" variants={containerVariants} initial="hidden" animate="visible">
       <form className='signupForm' onSubmit={handleSubmit}>
         <motion.input
           className='signup-adminStaff'

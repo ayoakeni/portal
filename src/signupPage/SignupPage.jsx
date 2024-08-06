@@ -15,23 +15,25 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="signup-container">
-      <div className="staff-admin-con">
-        <button
-          className={view === 'staff' ? 'active' : ''}
-          onClick={handleStaffClick}
-        >
-          Staff
-        </button>
-        <button
-          className={view === 'admin' ? 'active' : ''}
-          onClick={handleAdminClick}
-        >
-          Admin
-        </button>
+    <div className="sign-con">
+      <div className="signup-container">
+        <div className="staff-admin-con">
+          <button
+            className={view === 'staff' ? 'active' : ''}
+            onClick={handleStaffClick}
+          >
+            Staff
+          </button>
+          <button
+            className={view === 'admin' ? 'active' : ''}
+            onClick={handleAdminClick}
+          >
+            Admin
+          </button>
+        </div>
+        {view === 'staff' && <StaffSignUpPage />}
+        {view === 'admin' && <AdminSignUpPage />}
       </div>
-      {view === 'staff' && <StaffSignUpPage />}
-      {view === 'admin' && <AdminSignUpPage />}
     </div>
   );
 };

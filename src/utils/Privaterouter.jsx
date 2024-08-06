@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from './Firebase';
-import './PrivateRoute.css'
+import './PrivateRoute.css';
 
 const PrivateRoute = ({ children, allowedRoles }) => {
   const [user, loading, error] = useAuthState(auth);
@@ -34,12 +34,12 @@ const PrivateRoute = ({ children, allowedRoles }) => {
   }, [user]);
 
   if (loading || roleLoading) {
-    return <div className="box"><span class="loader"></span></div>
+    return <div className="box"><span className="loader"></span></div>;
   }
 
   if (error) {
     console.error('Error checking authentication state:', error);
-    return <div className="box"><span className='error'>Error</span></div>;
+    return <div className="box"><span className="error">Error</span></div>;
   }
 
   if (!user || !allowedRoles.includes(role)) {

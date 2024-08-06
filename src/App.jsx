@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Loginpage from './loginpage/LoginPage';
@@ -16,7 +15,7 @@ function App() {
         <Route
           path="/staff-request"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={['staff']}>
               <StaffRequestPage />
             </PrivateRoute>
           }
@@ -24,7 +23,7 @@ function App() {
         <Route
           path="/admin-dashboard"
           element={
-            <PrivateRoute>
+            <PrivateRoute allowedRoles={['admin']}>
               <AdminDashboard />
             </PrivateRoute>
           }
